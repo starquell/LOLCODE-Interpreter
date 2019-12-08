@@ -7,9 +7,9 @@
 
 #include <string_view>
 
-namespace type {
+namespace lolcode::type {
 
-    class Boolean {
+    class Boolean final: public Object {
     public:
         constexpr static std::string_view True = "WIN";
         constexpr static std::string_view False = "FAIL";
@@ -22,8 +22,9 @@ namespace type {
             m_value = value == True;
         }
 
-        using value_type = bool;
-
+        [[nodiscard]] std::string toStdString() const override {
+            return (m_value? True : False).data();
+        }
         operator bool() {
             return m_value;
         }
@@ -36,10 +37,10 @@ namespace type {
     };
 
     std::istream& operator>> (std::istream& stream, Boolean& boolean) {
-        return stream >> boolean;
+        return stream >> boolean.m_value;
     }
     std::ostream& operator<< (std::ostream& stream, const Boolean& boolean) {
-        return stream << boolean;
+        return stream << (boolean.m_value? Boolean::True : Boolean::False);
     }
 }
 

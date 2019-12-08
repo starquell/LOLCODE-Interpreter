@@ -6,15 +6,18 @@
 #include <string>
 #include <utility>
 
-namespace type {
+namespace lolcode::type {
 
     class String : public Object,
                    public std::string {
     public:
-        String () = default;
-        String (std::string str)
+        String() = default;
+        String(std::string str)
             : std::string (std::move(str))
         {}
+        [[nodiscard]] std::string toStdString() const override {
+            return data();
+        }
     };
 
     String& operator+= (String& lhs, const String& rhs) {

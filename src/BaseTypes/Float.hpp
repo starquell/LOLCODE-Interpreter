@@ -5,9 +5,9 @@
 
 #include <iostream>
 
-namespace type {
+namespace lolcode::type {
 
-    class Float : public Object {
+    class Float final: public Object {
     public:
         Float()
                 : m_value (0.0f)
@@ -16,10 +16,8 @@ namespace type {
                 : m_value (value)
         {}
 
-        using value_type = double;
-        Float& operator= (const Float& other) {
-            m_value = other.m_value;
-            return *this;
+        [[nodiscard]] std::string toStdString () const override {
+            return std::to_string(m_value);
         }
 
         friend bool operator> (const Float& lhs, const Float& rhs);

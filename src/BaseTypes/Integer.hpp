@@ -8,9 +8,9 @@
 #include <iostream>
 #include <algorithm>
 
-namespace type {
+namespace lolcode::type {
 
-   class Integer : public Object {
+   class Integer final : public Object {
    public:
        Integer()
             : m_value (0)
@@ -18,6 +18,10 @@ namespace type {
        Integer(int value)
             : m_value (value)
        {}
+
+       [[nodiscard]] std::string toStdString() const override {
+           return std::to_string(m_value);
+       }
 
        friend bool operator> (const Integer& lhs, const Integer& rhs);
        friend bool operator< (const Integer& lhs, const Integer& rhs);
