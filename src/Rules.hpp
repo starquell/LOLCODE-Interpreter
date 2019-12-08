@@ -14,10 +14,10 @@ namespace lolcode::parser {
 
     namespace ast {
         using Variable = x3::variant<lolcode::type::Integer,
-                                    lolcode::type::Float,
-                                    lolcode::type::String,
-                                    lolcode::type::Boolean,
-                std::string>;
+                                     lolcode::type::Float,
+                                     lolcode::type::String,
+                                     lolcode::type::Boolean,
+                                     std::string>;
     }
 
     namespace rules {
@@ -29,6 +29,7 @@ namespace lolcode::parser {
         const inline static x3::rule<class Boolean, ast::Variable> literal = "literal";
         const inline static x3::rule<class VarName, std::string> varName = "varName";
         const inline static x3::rule<class Declaration, std::string> declaration = "declaration";
+        const inline static x3::rule<class DeclAndDef, std::pair<std::string, ast::Variable>> declAndDef = "declAndDef";
         const inline static x3::rule<class Comment, x3::unused_type> comment = "comment";
 
         const inline static x3::rule<class Print, std::string> print = "print";
@@ -42,6 +43,7 @@ namespace lolcode::parser {
             const auto literal_def = integer | floating | string | boolean;
             const auto varName_def = x3::alpha >> *x3::alnum;
             const auto declaration_def = x3::lit("I HAS A ") >> varName;
+            const auto declAndDef_def = declaration >> x3::lit(" ITZ ") >> literal;
             const auto comment_def = x3::lit("BTW") >> *x3::char_;
 
             const auto print_def = x3::lit("VISIBLE") >> varName;
