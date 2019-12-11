@@ -8,8 +8,8 @@
 
 namespace lolcode::type {
 
-    class String : public Object,
-                   public std::string {
+    class String final: public Object,
+                        public std::string {
     public:
         String() = default;
         String(std::string str)
